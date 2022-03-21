@@ -6,7 +6,7 @@ import { StoreProvider } from './Store';
 
 ReactDOM.render(
   <StoreProvider>
-    <App />
+     <App /> {/* child component */}
   </StoreProvider>,
   document.getElementById('root')
 );
