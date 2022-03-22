@@ -14,10 +14,11 @@ interface IAction {
     type: string,
     payload: any
 }
+//create the store & then pass "episodes & favourite" from initialState
+export const Store = React.createContext<IState | any>(initialState); //[pass]
 
-export const Store = React.createContext<IState>(initialState);
-
-function reducer(state: IState, action: IAction): IState {
+//reducer manipulates the store
+function reducer(state: IState, action: IAction): IState {//[pass]
     switch (action.type) {
         case 'FETCH_DATA':
             return { ...state, episodes: action.payload }
@@ -28,9 +29,12 @@ function reducer(state: IState, action: IAction): IState {
 
 export function StoreProvider(props: any): JSX.Element {
     //storeProvider gives the component in the app access to the store.
+    const [state, dispatch] = React.useReducer(reducer, initialState)
     return (
-        <Store.Provider value={initialState}>
+        <Store.Provider value={{state, dispatch}}>
             {props.children}
         </Store.Provider>
     )
 }
+
+// https://api.tvmaze.com/singlesearch/shows?q=rick-&-morty&embed=episodes
