@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Store } from './Store';
+import { IAction, Store } from './Store';
 
 interface IEpisode {
   airdate: string
@@ -24,7 +24,8 @@ function App(): JSX.Element {
   React.useEffect(() => {
     state.episodes.length === 0 && fetchDataAction();
   })
-  //ACTION
+
+  //action
   const fetchDataAction = async () => {
     const URL = 'https://api.tvmaze.com/singlesearch/shows?q=rick-&-morty&embed=episodes'
     const data = await fetch(URL) //Fetch Url
@@ -34,7 +35,12 @@ function App(): JSX.Element {
       payload: dataJSON._embedded.episodes
     })
   }
-  console.log(state);
+
+  //export interface from store 
+  const toggleFavAction = (episode: IEpisode): IAction => dispatch({
+    type: 'Add_FAV', //add functionality to the store.
+    payload: episode
+  })
 
   return (
     <React.Fragment>
@@ -48,7 +54,12 @@ function App(): JSX.Element {
             <section key={episode.id} className="episode-box">
               <img src={episode.image.medium} alt={`Ricky${episode.name}`} />
               <section>
-                Season: {episode.season} Number: {episode.number}
+                <div>
+                  Season: {episode.season} Number: {episode.number}
+                </div>
+                <button onClick={() => toggleFavAction(episode)}>
+                  Fav
+                </button>
               </section>
             </section>
           )

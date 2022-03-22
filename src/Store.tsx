@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface IState {
-    episodes: [],
-    favourites: [],
+    episodes:  Array<any>,
+    favourites: Array<any>,
 }
 
 const initialState: IState = {
@@ -10,18 +10,20 @@ const initialState: IState = {
     favourites: [],
 }
 
-interface IAction {
+export interface IAction {
     type: string,
     payload: any
 }
 //create the store & then pass "episodes & favourite" from initialState
-export const Store = React.createContext<IState | any>(initialState); //[pass]
+export const Store = React.createContext < IState | any>(initialState); //[pass]
 
 //reducer manipulates the store
 function reducer(state: IState, action: IAction): IState {//[pass]
     switch (action.type) {
         case 'FETCH_DATA': //checked
             return { ...state, episodes: action.payload }
+        case 'ADD_FAV':
+            return {...state, favourites: [...state.favourites, action.payload]}
         default:
             return state
     }
