@@ -20,7 +20,7 @@ export const Store = React.createContext<IState | any>(initialState); //[pass]
 //reducer manipulates the store
 function reducer(state: IState, action: IAction): IState {//[pass]
     switch (action.type) {
-        case 'FETCH_DATA':
+        case 'FETCH_DATA': //checked
             return { ...state, episodes: action.payload }
         default:
             return state
